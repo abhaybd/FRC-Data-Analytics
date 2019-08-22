@@ -30,9 +30,9 @@ def predict_match_rp(match, oprs, rprs=None):
     if rprs is not None:
         avg_rpr = np.mean(list(rprs.values()))    
         red_teams = match['alliances']['red']['team_keys']
-        rp['red'] += max(int(sum(rprs[team] if team in rprs else avg_rpr for team in red_teams)), 0)
+        rp['red'] += np.clip(int(sum(rprs[team] if team in rprs else avg_rpr for team in red_teams)), 0, 2)
         blue_teams = match['alliances']['blue']['team_keys']
-        rp['blue'] += max(int(sum(rprs[team] if team in rprs else avg_rpr for team in blue_teams)), 0)
+        rp['blue'] += np.clip(int(sum(rprs[team] if team in rprs else avg_rpr for team in blue_teams)), 0, 2)
     return rp
 
 def predict_event_rankings(event, oprs, tba, rprs=None):
